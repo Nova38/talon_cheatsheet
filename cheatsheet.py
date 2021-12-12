@@ -8,7 +8,7 @@ import sys, os, json
 
 from talon.scripting import context
 
-from user.knausj_talon.code.code import commands_updated
+# from user.knausj_talon.code.code import commands_updated
 
 
 from dataclasses import asdict, dataclass, field
