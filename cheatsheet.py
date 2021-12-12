@@ -7,9 +7,11 @@ from talon import  Module, actions, registry
 import sys, os, json
 
 from talon.scripting import context
+from rich import print
 
 # from user.knausj_talon.code.code import commands_updated
 
+from dataclass_csv import DataclassWriter
 
 from dataclasses import asdict, dataclass, field
 
@@ -113,6 +115,38 @@ class user_actions:
 
         json_commands = json.dumps(asdict(all_commands), indent=4)
         file.write(json_commands)
-
         file.close()
+
+        csv_dir = os.path.join(this_dir, 'csv')
+
+
+        if not os.path.exists(csv_dir):
+            os.mkdir(csv_dir)  
+
+
+        csv_dir_reg = os.path.join(csv_dir, 'user_registry')
+
+        if not os.path.exists(csv_dir_reg):
+            os.mkdir(csv_dir_reg)  
+
+        for user_registry in all_commands.user_registry:
+            csv_file = os.path.join(csv_dir_reg, user_registry.pretty_name + ".csv")
+            with open(csv_file, "w",newline='') as f:
+                w = DataclassWriter(f, user_registry.commands, Registry_Command)
+                w.write()
+
+        csv_dir_ctx = os.path.join(csv_dir, 'contexts')
+
+        if not os.path.exists(csv_dir_ctx):
+            os.mkdir(csv_dir_ctx)  
+
+        for context in all_commands.contexts:
+            csv_file = os.path.join(csv_dir_ctx, context.pretty_name + ".csv")
+            if context.commands.__len__() > 0:
+                with open(csv_file, "w",newline='') as f:
+                    w = DataclassWriter(f, context.commands, Context_Command)
+                    w.write()
+
+
         
+
