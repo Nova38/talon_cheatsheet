@@ -1,2 +1,1 @@
-print json cheatsheet: user.json_cheatsheet()
-
+print cheatsheet: user.export_cheatsheet()
