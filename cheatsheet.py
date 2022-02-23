@@ -19,47 +19,14 @@ user_registry_list = ['user.letter', 'user.number_key', 'user.modifier_key',
                       'user.punctuation', 'user.function_key']
 
 
-@dataclass(frozen=True)
-class Context_Command():
-    name: str
-    command: str
-    latex_row: str = ""
-    os: str = ""
-
-    def __post_init__(self):
-        name = latex_sanitizer(self.name)
-        command = latex_sanitizer(self.command)
-
-        object.__setattr__(self, 'latex_row',
-                           f'\\Row{{Say={name}, Command={command}}}')
-
-
-@dataclass
-class Context_List:
-    name: str
-    pretty_name: str = ""
-    os: str = ""
-    latex: str = ""
-    raw_commands: list[dict] = field(default_factory=list)
-    commands: list[Context_Command] = field(default_factory=list)
-
-    def __post_init__(self):
-        self.pretty_name, self.os = get_pretty_context_name(self.name)
-        self.commands = [Context_Command(name=command.rule.rule, command=command.target.code, os=self.os)
-                         for command in registry.contexts[self.name].commands.values()
-                         ]
-
-        for command in self.commands:
-            self.latex += command.latex_row + "\n"
-
 
 @dataclass(frozen=True)
-class Registry_Command:
+class Command_Item:
     name: str
     command: str
     latex_row: str = ""
     alt_names: list[str] = field(default_factory=list)
-
+    os: str = ""
 
     def __eq__(self, __o: object) -> bool:
         return self.command == __o.command
@@ -72,6 +39,29 @@ class Registry_Command:
                            f'\\Row{{Say={name}, Command={command}}}')
 
 
+
+
+@dataclass
+class Context_List:
+    name: str
+    pretty_name: str = ""
+    os: str = ""
+    latex: str = ""
+    raw_commands: list[dict] = field(default_factory=list)
+    commands: list[Command_Item] = field(default_factory=list)
+
+    def __post_init__(self):
+        self.pretty_name, self.os = get_pretty_context_name(self.name)
+        self.commands = [Command_Item(name=command.rule.rule, command=command.target.code, os=self.os)
+                         for command in registry.contexts[self.name].commands.values()
+                         ]
+
+        for command in self.commands:
+            self.latex += command.latex_row + "\n"
+
+
+
+
 @dataclass
 class Registry_List:
     name: str
@@ -79,13 +69,13 @@ class Registry_List:
     registry: str = ""
     # os: str = ""
     latex: str = ""
-    commands: list[Registry_Command] = field(default_factory=list)
+    commands: list[Command_Item] = field(default_factory=list)
 
     def __post_init__(self):
         self.registry = self.name.split(".")[0]
         self.pretty_name = self.name.split(".")[1]
 
-        self.commands = [Registry_Command(name=name, command=command)
+        self.commands = [Command_Item(name=name, command=command)
                          for name, command in registry.lists[self.name][0].items()]
 
         for command in self.commands:
@@ -94,7 +84,7 @@ class Registry_List:
 
 @dataclass
 class command_list:
-    user_registry:  field(default_factory=list([Registry_Command]))
+    user_registry:  field(default_factory=list([Command_Item]))
     contexts:       field(default_factory=list([Context_List]))
 
 
@@ -190,7 +180,7 @@ class user_actions:
             csv_file.touch(exist_ok=True)
             with open(csv_file, "w", newline='') as f:
                 w = DataclassWriter(
-                    f, user_registry.commands, Registry_Command)
+                    f, user_registry.commands, Command_Item)
                 w.write()
 
         for context in all_commands.contexts:
@@ -200,7 +190,7 @@ class user_actions:
             csv_file = csv_ctx_dir / f'{context.pretty_name}.csv'
             with open(csv_file, "w", newline='') as f:
                 w = DataclassWriter(f, context.commands,
-                                    Context_Command, delimiter='\t')
+                                    Command_Item, delimiter='\t')
                 w.write()
 
         # Latex File Generation
