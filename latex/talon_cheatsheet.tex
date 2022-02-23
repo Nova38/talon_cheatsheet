@@ -28,11 +28,13 @@ blockverticalspace=10mm, colspace=10mm, subcolspace=8mm]{tikzposter} %Default va
 
 
 % --------------------------------------------------
-% tables 
 % pgfplotstable
+% --------------------------------------------------
+
 \usepackage{pgfplotstable}
 \usepackage{booktabs}
-
+\usepackage{array}
+\usepackage{colortbl}
 
 % --------------------------------------------------
 
@@ -163,36 +165,35 @@ blockverticalspace=10mm, colspace=10mm, subcolspace=8mm]{tikzposter} %Default va
 % -----
 % the following writes to an external file called 'foo.hs'
 \usepackage{filecontents}
-\begin{filecontents*}{foo.py}
-import numpy as np
 
-def incmatrix(genl1,genl2):
-    m = len(genl1)
-    n = len(genl2)
-    M = None #to become the incidence matrix
-    VT = np.zeros((n*m,1), int)  #dummy variable
-    
-    #compute the bitwise xor matrix
-    M1 = bitxormatrix(genl1)
-    M2 = np.triu(bitxormatrix(genl2),1) 
-
-    for i in range(m-1):
-        for j in range(i+1, m):
-            [r,c] = np.where(M2 == M1[i,j])
-            for k in range(len(r)):
-                VT[(i)*n + r[k]] = 1;
-                VT[(i)*n + c[k]] = 1;
-                VT[(j)*n + r[k]] = 1;
-                VT[(j)*n + c[k]] = 1;
-                
-                if M is None:
-                    M = np.copy(VT)
-                else:
-                    M = np.concatenate((M, VT), 1)
-                
-                VT = np.zeros((n*m,1), int)
-    
-    return M
+\begin{filecontents*}{letter.csv}
+name,command
+alfa,a
+bat,b
+cap,c
+drum,d
+each,e
+fine,f
+gust,g
+hotel,h
+sit,i
+jury,j
+crunch,k
+look,l
+made,m
+near,n
+odd,o
+pit,p
+quench,q
+red,r
+sun,s
+trap,t
+urge,u
+vest,v
+whale,w
+plex,x
+yank,y
+zulu,z
 \end{filecontents*}
 % -----
 
@@ -207,8 +208,14 @@ def incmatrix(genl1,genl2):
 \begin{columns}%blocks will be placed into columns
     \column{.55}
     \block[]{Minted Test}{
+        \pgfplotstabletypeset[
+            col sep=comma,
+            columns/E/.style={string type}
+        ]{letter.csv}
+    }
+    \block[]{Minted Test}{
      test
-     \lstinputlisting[language=Python]{foo.py}
+    %  \lstinputlisting[language=Python]{foo.py}
         this
     }
     \block[roundedcorners=40]{Creating the document}{
