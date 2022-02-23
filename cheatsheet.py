@@ -58,6 +58,11 @@ class Registry_Command:
     name: str
     command: str
     latex_row: str = ""
+    alt_names: list[str] = field(default_factory=list)
+
+
+    def __eq__(self, __o: object) -> bool:
+        return self.command == __o.command
 
     def __post_init__(self):
         name = latex_sanitizer(self.name)
