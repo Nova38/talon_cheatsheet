@@ -39,7 +39,7 @@ class Command_Item:
 
 
 def gen_latex_row(cmd : Command_Item) -> str:
-    return f'\\textcolor{{Maroon}}{{ {latex_sanitizer(cmd.command)}}} & {latex_sanitizer(cmd.name)} \\\\ \\hline\n'
+    return f'\\textcolor{{Maroon}}{{ {latex_sanitizer(cmd.command.removeprefix("user.").removeprefix("browser."))}}} & {latex_sanitizer(cmd.name)} \\\\ \\hline\n'
 
 
 

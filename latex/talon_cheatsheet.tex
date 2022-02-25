@@ -44,6 +44,7 @@
 
 
 
+\usepackage{underscore}
 
 
 
@@ -69,37 +70,199 @@ coltitle=black,center title,breakable}
 
 % # Registry
 \begin{multicols}{4}
-
-\input{tables/user_registry/letter.tex}
-\input{tables/user_registry/arrow_key.tex}
-\input{tables/user_registry/function_key.tex}
-\input{tables/user_registry/special_key.tex}
-\input{tables/user_registry/modifier_key.tex}
-\input{tables/user_registry/number_key.tex}
-\input{tables/user_registry/symbol_key.tex}
-\input{tables/user_registry/punctuation.tex}
+    \input{tables/user_registry/letter.tex}
+    \input{tables/user_registry/number_key.tex}
+    \input{tables/user_registry/modifier_key.tex}
+    \input{tables/user_registry/special_key.tex}
+    \input{tables/user_registry/symbol_key.tex}
+    \input{tables/user_registry/arrow_key.tex}
+    \input{tables/user_registry/punctuation.tex}
+    \input{tables/user_registry/function_key.tex}
 \end{multicols}
 
 
-%  Programs
-\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
-colback=black!1!white,colframe=green!50!black,colbacktitle=green!30!white,
-coltitle=black,center title,breakable}
 
+
+
+% % Languages
+\tcbset{enhanced,fonttitle=\bfseries\large,=\normalsize\sffamily,
+colback=black!1!white,colframe=Aquamarine!50!black,colbacktitle=Aquamarine!30!white,
+coltitle=black,center title,breakable}
+    
+%  Generics
 
 \begin{multicols}{3}
-\input{tables/contexts/tmux.tex}
- 
+    \input{tables/contexts/generic browser.tex}
+    % \input{tables/contexts/generic debugger.tex}
+    \input{tables/contexts/generic snippets.tex}
+    \input{tables/contexts/generic snippets open.tex}
+    \input{tables/contexts/generic terminal.tex}
+    % \input{tables/contexts/generic editor.tex}
 \end{multicols}
+
+\newpage{}
+%  Programs
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\small\sffamily,
+colback=black!1!white,colframe=green!50!black,colbacktitle=green!30!white,
+coltitle=black,center title,breakable}
+\begin{multicols}{3}
+\input{tables/contexts/tmux.tex}
+\input{tables/contexts/1password.tex}
+\input{tables/contexts/1password global.tex}
+% \input{tables/contexts/amethyst.tex}
+\input{tables/contexts/anaconda.tex}
+\input{tables/contexts/discord.tex}
+% \input{tables/contexts/eclipse.tex}
+% \input{tables/contexts/firefox.tex}
+% \input{tables/contexts/gdb.tex}
+
+% \input{tables/contexts/i3wm.tex}
+% \input{tables/contexts/jetbrains.tex}
+% \input{tables/contexts/kubectl.tex}
+% \input{tables/contexts/dunst.tex}
+% \input{tables/contexts/keepassx.tex}
+\input{tables/contexts/signal.tex}
+% \input{tables/contexts/taskwarrior.tex}
+% \input{tables/contexts/termite.tex}
+\input{tables/contexts/tmux.tex}
+% \input{tables/contexts/finder.tex}
+% \input{tables/contexts/notes.tex}
+% \input{tables/contexts/rstudio.tex}
+% \input{tables/contexts/apple terminal.tex}
+\input{tables/contexts/explorer.tex}
+% \input{tables/contexts/outlook.tex}
+% \input{tables/contexts/windows terminal.tex}
+\input{tables/contexts/wsl.tex}
+% \input{tables/contexts/slack mac.tex}
+\input{tables/contexts/slack win.tex}
+\input{tables/contexts/talon repl.tex}
+% \input{tables/contexts/teams.tex}
+% \input{tables/contexts/teams mac.tex}
+% \input{tables/contexts/terraform.tex}
+% \input{tables/contexts/visual studio.tex}
+% \input{tables/contexts/vscode.tex}
+\input{tables/contexts/github.tex}
+% \input{tables/contexts/gitlab.tex}
+\input{tables/contexts/outlook.tex}
+% \input{tables/contexts/protonmail.tex}
+\input{tables/contexts/twitter.tex}
+% \input{tables/contexts/windbg.tex}
+\input{tables/contexts/draft editor.tex}
+\input{tables/contexts/draft editor open.tex}
+\input{tables/contexts/emoji.tex}
+\input{tables/contexts/abbreviate.tex}
+\input{tables/contexts/cancel.tex}
+\input{tables/contexts/chapters.tex}
+\input{tables/contexts/datetimeinsert.tex}
+\input{tables/contexts/desktops.tex}
+\input{tables/contexts/extensions.tex}
+\input{tables/contexts/formatters.tex}
+\input{tables/contexts/git.tex}
+\input{tables/contexts/git add patch.tex}
+\input{tables/contexts/help.tex}
+\input{tables/contexts/help open.tex}
+\input{tables/contexts/help scope open.tex}
+\input{tables/contexts/history.tex}
+\input{tables/contexts/keys.tex}
+\input{tables/contexts/macro.tex}
+\input{tables/contexts/media.tex}
+\input{tables/contexts/messaging.tex}
+\input{tables/contexts/microphone selection.tex}
+% \input{tables/contexts/mouse.tex}
+\input{tables/contexts/mouse cursor.tex}
+\input{tables/contexts/multiple cursors.tex}
+\input{tables/contexts/pages.tex}
+\input{tables/contexts/repeater.tex}
+\input{tables/contexts/screens.tex}
+\input{tables/contexts/screenshot.tex}
+% \input{tables/contexts/splits.tex}
+% \input{tables/contexts/standard.tex}
+% \input{tables/contexts/tabs.tex}
+\input{tables/contexts/talon helpers.tex}
+\input{tables/contexts/websites and search engines.tex}
+\input{tables/contexts/window management.tex}
+% \input{tables/contexts/dictation mode.tex}
+% \input{tables/contexts/dragon modes.tex}
+\input{tables/contexts/language modes.tex}
+\input{tables/contexts/modes.tex}
+% \input{tables/contexts/sleep mode wav2letter.tex}
+% \input{tables/contexts/wake up.tex}
+\input{tables/contexts/mouse grid.tex}
+\input{tables/contexts/mouse grid always.tex}
+\input{tables/contexts/mouse grid open.tex}
+\input{tables/contexts/draft global.tex}
+% \input{tables/contexts/draft window.tex}
+% \input{tables/contexts/draft window open.tex}
+\input{tables/contexts/find and replace.tex}
+\input{tables/contexts/homophones.tex}
+\input{tables/contexts/homophones open.tex}
+\input{tables/contexts/line commands.tex}
+\input{tables/contexts/numbers.tex}
+\input{tables/contexts/symbols.tex}
+% \input{tables/contexts/text navigation.tex}
+% \input{tables/contexts/latex.tex}
+% \input{tables/contexts/maths.tex}
+% \input{tables/contexts/scientific notebook 55.tex}
+\input{tables/contexts/edge.tex}
+\input{tables/contexts/powertoys.tex}
+\input{tables/contexts/talon control.tex}
+% \input{tables/contexts/cheatsheet.tex}
+% \input{tables/contexts/choice commands.tex}
+% \input{tables/contexts/documentation.tex}
+\input{tables/contexts/toolkit.tex}
+% \input{tables/contexts/walkthrough.tex}
+\input{tables/contexts/widget quick choices.tex}
+
+
+\end{multicols}
+
+\newpage{}
+
+
+
+% \begin{multicols}{2}
+%     % \input{tables/contexts/lyx.tex}
+%     % \input{tables/contexts/commands.tex}
+
+% \end{multicols}
 
 % Languages
 \tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
-colback=black!1!white,colframe=purple!50!black,colbacktitle=purple!30!white,
+colback=black!1!white,colframe=BlueViolet!50!black,colbacktitle=BlueViolet!30!white,
 coltitle=black,center title,breakable}
     
 
 \begin{multicols}{3}
-    \input{tables/contexts/c}
-     
-    \end{multicols}
+    \input{tables/contexts/batch.tex}
+    % \input{tables/contexts/c.tex}
+    % \input{tables/contexts/go.tex}
+    % \input{tables/contexts/java.tex}
+    \input{tables/contexts/javascript.tex}
+    \input{tables/contexts/markdown.tex}
+    \input{tables/contexts/python.tex}
+    % \input{tables/contexts/r.tex}
+    % \input{tables/contexts/ruby.tex}
+    % \input{tables/contexts/sql.tex}
+    % \input{tables/contexts/comment block.tex}
+    \input{tables/contexts/comment documentation.tex}
+    \input{tables/contexts/comment line.tex}
+    \input{tables/contexts/data bool.tex}
+    \input{tables/contexts/data null.tex}
+    \input{tables/contexts/functions.tex}
+    \input{tables/contexts/functions gui.tex}
+    \input{tables/contexts/functions gui open.tex}
+    \input{tables/contexts/imperative.tex}
+    \input{tables/contexts/libraries.tex}
+    \input{tables/contexts/library gui open.tex}
+    \input{tables/contexts/object oriented.tex}
+    \input{tables/contexts/operators array.tex}
+    \input{tables/contexts/operators assignment.tex}
+    \input{tables/contexts/operators bitwise.tex}
+    \input{tables/contexts/operators lambda.tex}
+    \input{tables/contexts/operators math.tex}
+    \input{tables/contexts/operators pointer.tex}
+    % \input{tables/contexts/talon.tex}
+    % \input{tables/contexts/terraform.tex}
+    % \input{tables/contexts/vimscript.tex}
+\end{multicols}
 \end{document}
