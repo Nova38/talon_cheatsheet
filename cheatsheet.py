@@ -20,7 +20,7 @@ user_registry_list = ['user.letter', 'user.number_key', 'user.modifier_key',
 
 
 
-@dataclass(frozen=True)
+@dataclass()
 class Command_Item:
     name: str
     command: str
@@ -35,8 +35,11 @@ class Command_Item:
         name = latex_sanitizer(self.name)
         command = latex_sanitizer(self.command)
 
-        object.__setattr__(self, 'latex_row',
-                           f'\\Row{{Say={name}, Command={command}}}')
+
+
+
+def gen_latex_row(cmd : Command_Item) -> str:
+    return f'\\textcolor{{Maroon}}{{ {latex_sanitizer(cmd.command)}}} & {latex_sanitizer(cmd.name)} \\\\ \\hline\n'
 
 
 
@@ -47,6 +50,7 @@ class Context_List:
     pretty_name: str = ""
     os: str = ""
     latex: str = ""
+    latex_import:str = ""
     raw_commands: list[dict] = field(default_factory=list)
     commands: list[Command_Item] = field(default_factory=list)
 
@@ -55,9 +59,12 @@ class Context_List:
         self.commands = [Command_Item(name=command.rule.rule, command=command.target.code, os=self.os)
                          for command in registry.contexts[self.name].commands.values()
                          ]
-
+        self.latex = f"""\\begin{{tcolorbox}}[tabularx*={{\\arrayrulewidth0.5mm}}{{Y|R}},title={self.pretty_name.replace("_", " ")}]\n \\textbf{{Output}} &  \\textbf{{Say}}\\\\\\hline\hline\n"""
         for command in self.commands:
-            self.latex += command.latex_row + "\n"
+            self.latex += gen_latex_row(command) 
+        self.latex += "\\end{tcolorbox}"
+
+        self.latex_import = f'\input{{tables/contexts/{self.pretty_name}.tex}}\n'
 
 
 
@@ -69,17 +76,25 @@ class Registry_List:
     registry: str = ""
     # os: str = ""
     latex: str = ""
+    latex_import:str = ""
     commands: list[Command_Item] = field(default_factory=list)
 
     def __post_init__(self):
         self.registry = self.name.split(".")[0]
         self.pretty_name = self.name.split(".")[1]
-
+        self.latex = f"""\\begin{{tcolorbox}}[tabularx*={{\\arrayrulewidth0.5mm}}{{Y|R}},title={self.pretty_name.replace("_", " ")}]\n \\textbf{{Output}} &  \\textbf{{Say}}\\\\\\hline\hline\n"""
+        self.commands = []
         self.commands = [Command_Item(name=name, command=command)
                          for name, command in registry.lists[self.name][0].items()]
 
+        self.latex_import = f'\input{{tables/user_registry/{self.pretty_name}.tex}}\n'
+
+
         for command in self.commands:
-            self.latex += command.latex_row + "\n"
+
+            self.latex += gen_latex_row(command) 
+        
+        self.latex += "\\end{tcolorbox}"
 
 
 @dataclass
@@ -171,6 +186,7 @@ class user_actions:
         latex_tables_dir_ctx = base_latex_tables_dir / 'contexts'
         latex_tables_dir_ctx.mkdir(exist_ok=True, parents=True)
 
+
         # Json File Genoration
         json_path.write_text(json.dumps(asdict(all_commands), indent=4))
 
@@ -193,10 +209,11 @@ class user_actions:
                                     Command_Item, delimiter='\t')
                 w.write()
 
+
         # Latex File Generation
         for user_registry in all_commands.user_registry:
             table_file = latex_tables_dir_reg / \
-                f'{user_registry.pretty_name}.kvt'
+                f'{user_registry.pretty_name}.tex'
             table_file.write_text(user_registry.latex)
 
         for context in all_commands.contexts:
@@ -204,5 +221,18 @@ class user_actions:
                 continue
 
             table_file = latex_tables_dir_ctx / \
-                f'{context.pretty_name}.kvt'
+                f'{context.pretty_name}.tex'
             table_file.write_text(context.latex)
+
+        latex_table_import_file = base_latex_tables_dir / 'tables.tex'
+        with latex_table_import_file.open("w") as f:
+            for context in all_commands.contexts:
+                if context.commands.__len__() == 0:
+                    continue
+
+                f.write(context.latex_import)
+            for user_registry in all_commands.user_registry:
+                f.write(user_registry.latex_import)
+            
+
+

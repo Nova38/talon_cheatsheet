@@ -1,7 +1,7 @@
 % --------------------------------------------------
 % Page setup with Margins 
 % --------------------------------------------------
-\documentclass{article}
+\documentclass[9pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=0.5cm]{geometry}
 
@@ -10,24 +10,18 @@
      textwidth = 6.25in
 }
 
-\usepackage{showframe}
 
-\usepackage{layout}
 
 % \setlength{\parindent}{0pt}
 % --------------------------------------------------
 
-% --------------------------------------------------
-% References
-% --------------------------------------------------
-\usepackage[english]{babel}
-% --------------------------------------------------
 
 
 % --------------------------------------------------
 % Color
 % --------------------------------------------------
-\usepackage[]{xcolor}
+\usepackage[usenames,dvipsnames]{xcolor}
+
 % --------------------------------------------------
 
 
@@ -35,38 +29,17 @@
 % TColorBox
 % --------------------------------------------------
 \usepackage{tcolorbox}
-\tcbuselibrary{fitting}
-\tcbuselibrary{raster}
+\tcbuselibrary{skins,breakable}
 
 % --------------------------------------------------
 
 
 % --------------------------------------------------
-% PGFPlotsTables
+% Tables
 % --------------------------------------------------
-\usepackage{pgfplotstable}
-\usepackage{booktabs,colortbl}
-\pgfplotsset{compat=1.18}
-
-
-\pgfplotstableset{
-    col sep=comma,
-    verb string type,
-    multicolumn names,
-    every head row/.style={before row=\hline,after row=\hline\hline},
-    every last row/.style={after row=\hline},
-    every first column/.style={
-        column type/.add={|}{}
-    },
-    every last column/.style={
-        column type/.add={}{|}
-    },
-    every even row/.style={
-        before row={\rowcolor[gray]{0.9}}
-    },
-    display columns/0/.style={column name = Say, column type = {r}},
-    display columns/1/.style={column name = Output, column type = {l}},
-}
+% \usepackage{tabularray}
+\usepackage{array,tabularx}
+\usepackage{colortbl}
 % --------------------------------------------------
 
 
@@ -75,48 +48,58 @@
 
 
 
+\usepackage{multicol}
 
-
-\usepackage{lipsum}
-
-\usepackage{keyvaltable}
 
 
 \begin{document}
 % \thispagestyle{empty}
-hi
 
-\NewKeyValTable{Command}{
-Say: align=r;
-Command: align=X;
-}
 
 
 \let\textquotedbl="
 
-\begin{tcbraster}[
-    colback=green!10!white,
-    boxsep=0.5mm,
-    raster columns=5,
-    raster rows=2,
-    % raster height=\linewidth,
-    ]
-    \tcboxfit[height=10cm,title=With a title]{
-        \centering
-        \ShowKeyValTableFile{Command}{tables/user_registry/letter.kvt}          
-   
-            
-        % \pgfplotstabletypeset[]{../letter.csv}
-    }
-    \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=My Heading]
 
-        \ShowKeyValTableFile{Command}{tables/user_registry/symbol_key.kvt}          
-    \end{tcolorbox}
-\end{tcbraster}
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=black!1!white,colframe=blue!50!black,colbacktitle=blue!30!white,
+coltitle=black,center title,breakable}
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}% see tabularx
+\newcolumntype{R}{>{\raggedright\arraybackslash}X}% see tabularx
 
 
+% # Registry
+\begin{multicols}{4}
+
+\input{tables/user_registry/letter.tex}
+\input{tables/user_registry/arrow_key.tex}
+\input{tables/user_registry/function_key.tex}
+\input{tables/user_registry/special_key.tex}
+\input{tables/user_registry/modifier_key.tex}
+\input{tables/user_registry/number_key.tex}
+\input{tables/user_registry/symbol_key.tex}
+\input{tables/user_registry/punctuation.tex}
+\end{multicols}
 
 
+%  Programs
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=black!1!white,colframe=green!50!black,colbacktitle=green!30!white,
+coltitle=black,center title,breakable}
 
 
+\begin{multicols}{3}
+\input{tables/contexts/tmux.tex}
+ 
+\end{multicols}
+
+% Languages
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+colback=black!1!white,colframe=purple!50!black,colbacktitle=purple!30!white,
+coltitle=black,center title,breakable}
+    
+
+\begin{multicols}{3}
+    \input{tables/contexts/c}
+     
+    \end{multicols}
 \end{document}
